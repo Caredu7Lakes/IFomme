@@ -38,3 +38,7 @@ O projeto está pronto para build estático:
 - configure fallback de SPA para `index.html`, para que `/r/:slug` abra corretamente.
 
 O modo demonstração não deve ser usado como ambiente de produção. Para operação real, configure Supabase e revise políticas, backups, termos de privacidade e retenção dos dados pessoais.
+
+# Actions CI
+
+O CI vai rodar npm ci + npm run build a cada PR, travando qualquer código que não compile. Começamos só com o build (o projeto ainda não tem ESLint configurado — lint fica como incremento depois, pra não quebrar o CI de cara).
