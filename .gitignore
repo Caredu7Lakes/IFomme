@@ -1,0 +1,14 @@
+
+# Dependências
+node_modules/
+
+# Build
+dist/
+build/
+
+# Variáveis de ambiente e dados sensíveis
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
