@@ -42,3 +42,9 @@ O modo demonstração não deve ser usado como ambiente de produção. Para oper
 # Actions CI
 
 O CI vai rodar npm ci + npm run build a cada PR, travando qualquer código que não compile. Começamos só com o build (o projeto ainda não tem ESLint configurado — lint fica como incremento depois, pra não quebrar o CI de cara).
+
+## Pendências e melhorias futuras
+
+- Implementar a política RLS de `INSERT` na tabela `restaurants`, permitindo o cadastro seguro de novos restaurantes.
+- Criar o fluxo de cadastro inicial do proprietário e a associação automática ao restaurante.
+- Implementar a integração com uma IA generativa real para criar descrições dos pratos.
