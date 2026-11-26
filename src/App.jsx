@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import { createClient } from "@supabase/supabase-js";
 import {
   Utensils,
@@ -25,6 +25,7 @@ import {
   ArrowLeft,
   CircleCheck,
 } from "lucide-react";
+import { mapDish, mapOrder, calculateOrderTotal } from './lib/orders.js';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -413,7 +414,7 @@ export default function App() {
         price: +d.price,
         quantity: cart[d.id],
       }));
-    const total = items.reduce((s, i) => s + i.price * i.quantity, 0);
+    const total=calculateOrderTotal(items);
     if (
       !items.length ||
       !form.name.trim() ||
@@ -788,37 +789,7 @@ export default function App() {
     </div>
   );
 }
-function mapDish(d) {
-  return {
-    ...d,
-    id: d.id,
-    ingredients: d.ingredients || "",
-    description: d.description || "",
-    price: Number(d.price),
-    photo: d.photo_url || "",
-    available: d.available_today,
-  };
-}
-function mapOrder(o) {
-  return {
-    ...o,
-    id: o.id,
-    number: o.order_number,
-    customer_name: o.customer_name,
-    phone: o.customer_phone,
-    address: o.address,
-    payment: o.payment,
-    notes: o.notes,
-    status: o.status,
-    total: Number(o.total),
-    created_at: o.created_at,
-    items: (o.order_items || []).map((i) => ({
-      name: i.dish_name,
-      price: Number(i.unit_price),
-      quantity: i.quantity,
-    })),
-  };
-}
+
 function NavButton({ active, icon, children, onClick }) {
   return (
     <button
