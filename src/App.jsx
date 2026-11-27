@@ -185,53 +185,19 @@ export default function App() {
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
   }, []);
-
   useEffect(() => {
     if (!supabase) return;
     supabase.auth
       .getSession()
       .then(({ data: { session } }) => setSession(session));
-
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_e, s) => setSession(s));
     return () => subscription.unsubscribe();
   }, []);
-
   useEffect(() => {
     if (!supabase) saveLocal(data);
   }, [data]);
-
-  // Sincroniza os pedidos entre abas no modo demonstração
-useEffect(() => {
-  if (supabase) return;
-
-  function handleStorage(event) {
-    if (event.key !== STORE_KEY || !event.newValue) return;
-
-    try {
-      const updatedData = JSON.parse(event.newValue);
-
-      setData((oldData) => {
-        // Evita atualizações desnecessárias e possíveis ciclos entre abas
-        if (JSON.stringify(oldData) === JSON.stringify(updatedData)) {
-          return oldData;
-        }
-
-        return updatedData;
-      });
-    } catch (error) {
-      console.error("Erro ao sincronizar os dados:", error);
-    }
-  }
-
-  window.addEventListener("storage", handleStorage);
-
-  return () => {
-    window.removeEventListener("storage", handleStorage);
-  };
-}, []);
-
   useEffect(() => {
     if (!toast) return;
     const t = setTimeout(() => setToast(""), 2600);
